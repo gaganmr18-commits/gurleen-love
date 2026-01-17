@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Gurleen</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #ffe6e6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 20px;
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .content {
+            display: none;
+            padding: 20px;
+            z-index: 10;
+        }
+
+        h1 { color: #d63384; font-size: 2.5rem; margin-bottom: 10px; }
+        h2 { color: #ff4d4d; font-size: 1.5rem; }
+        
+        .message-box {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 500px;
+            line-height: 1.6;
+        }
+
+        /* Heart & Flower Animation */
+        .falling {
+            position: fixed;
+            top: -10%;
+            z-index: 1;
+            user-select: none;
+            cursor: default;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        .typing-text {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #333;
+            border-right: 2px solid #ff4d4d;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            margin: 0 auto;
+        }
+
+        .animate-type {
+            animation: typing 4s steps(40) forwards, blink 0.5s infinite;
+        }
+
+        @keyframes typing { from { width: 0; } to { width: 100%; } }
+        @keyframes blink { from { border-color: transparent; } to { border-color: #ff4d4d; } }
+    </style>
+</head>
+<body>
+
+    <div id="overlay">
+        <h2>Gurleen, click here for a surprise ❤️</h2>
+        <button onclick="startSurprise()">Open Surprise</button>
+    </div>
+
+    <audio id="loveSong" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="content" id="mainContent">
+        <div class="message-box">
+            <h1 id="typing"></h1>
+            <hr>
+            <p><strong>Gagan ❤️ Gurleen</strong></p>
+            <p style="font-style: italic; color: #555;">
+                "Tumhara birthday 2 Nov ko hai aur mera 27 Sept ko... <br>
+                Ye sirf dates nahi hain, ye wo din hain jab hum dono ki duniya ek hone ke liye bani thi. <br>
+                Mera har din tumse shuru hota hai aur tum par hi khatam."
+            </p>
+            <h3>I Love You Forever!</h3>
+        </div>
+    </div>
+
+    <script>
+        function startSurprise() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+            
+            // Start Music
+            var audio = document.getElementById('loveSong');
+            audio.play();
+
+            // Start Typing Animation
+            const text = "Hey Gurleen, I am Gagan. I love you my putt, khnd, mithi.";
+            let i = 0;
+            function typeWriter() {
+                if (i < text.length) {
+                    document.getElementById("typing").innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                }
+            }
+            typeWriter();
+
+            // Start Falling Hearts/Flowers
+            setInterval(createFallingItem, 300);
+        }
+
+        function createFallingItem() {
+            const items = ['❤️', '🌸', '🌹', '💕', '🌷'];
+            const item = document.createElement('div');
+            item.classList.add('falling');
+            item.innerHTML = items[Math.floor(Math.random() * items.length)];
+            item.style.left = Math.random() * 100 + 'vw';
+            item.style.fontSize = Math.random() * 20 + 20 + 'px';
+            item.style.animationDuration = Math.random() * 3 + 2 + 's';
+            item.style.opacity = Math.random();
+            
+            document.body.appendChild(item);
+
+            setTimeout(() => {
+                item.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
